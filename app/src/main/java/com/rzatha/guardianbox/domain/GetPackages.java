@@ -2,8 +2,7 @@ package com.rzatha.guardianbox.domain;
 
 import androidx.lifecycle.LiveData;
 
-import com.rzatha.guardianbox.domain.model.Login;
-import com.rzatha.guardianbox.domain.model.Package;
+import com.rzatha.guardianbox.domain.model.Folder;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class GetPackages {
     public GetPackages (Repository repository) {
         this.repository = repository;
     }
-    public LiveData<List<Package>> getPackages() {
+    public LiveData<List<Folder>> getPackages() {
         return repository.getPackages();
     }
 }

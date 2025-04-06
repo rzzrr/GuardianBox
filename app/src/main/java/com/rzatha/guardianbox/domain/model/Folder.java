@@ -1,11 +1,11 @@
 package com.rzatha.guardianbox.domain.model;
 
-public class Package implements Record {
+public class Folder implements Record {
 
     private String id;
     private String packageName;
 
-    public Package(String id, String packageName) {
+    public Folder(String id, String packageName) {
         this.id = id;
         this.packageName = packageName;
     }
