@@ -25,6 +25,11 @@ android {
             )
         }
     }
+
+    buildFeatures{
+        viewBinding = true
+    }
+    
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -40,4 +45,15 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    //RxJava3
+    implementation (libs.rxjava)
+
+    //Room
+    implementation(libs.room.runtime)
+    //Java annotationProcessor
+    annotationProcessor(libs.room.compiler)
+    // RxJava3 support for Room
+    implementation(libs.room.rxjava3)
+
 }

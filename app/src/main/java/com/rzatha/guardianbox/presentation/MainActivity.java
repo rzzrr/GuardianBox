@@ -1,8 +1,10 @@
-package com.rzatha.guardianbox;
+package com.rzatha.guardianbox.presentation;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.rzatha.guardianbox.R;
 
 public class MainActivity extends AppCompatActivity {
 
