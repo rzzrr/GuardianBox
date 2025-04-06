@@ -1,4 +1,4 @@
-package com.rzatha.guardianbox.presentation;
+package com.rzatha.guardianbox.presentation.view;
 
 import android.os.Bundle;
 
