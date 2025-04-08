@@ -8,6 +8,6 @@
     android:layout_height="match_parent"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     tools:context=".presentation.view.RecordFragment"
-    tools:listitem="@layout/record_item"
+    tools:listitem="@layout/login_item"
     tools:itemCount="15"
     />

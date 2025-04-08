@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="60dp"
+    android:elevation="2dp"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -16,7 +17,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="16dp"
-            tools:src="@mipmap/ic_launcher"
+            android:src="@drawable/ic_folder_item"
             />
 
         <TextView
