@@ -1,14 +1,16 @@
 package com.rzatha.guardianbox.domain.model;
 
-public class Note implements Record {
+import java.util.Objects;
+
+public class Note extends Record {
 
     private String id;
-    private String resourceName;
+    private String name;
     private String text;
 
-    public Note(String id, String resourceName, String text) {
+    public Note(String id, String name, String text) {
         this.id = id;
-        this.resourceName = resourceName;
+        this.name = name;
         this.text = text;
     }
 
@@ -16,8 +18,21 @@ public class Note implements Record {
         return id;
     }
 
-    public String getResourceName() {
-        return resourceName;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Note note = (Note) o;
+        return Objects.equals(id, note.id) && Objects.equals(name, note.name) && Objects.equals(text, note.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, text);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getText() {
@@ -28,8 +43,8 @@ public class Note implements Record {
         this.id = id;
     }
 
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setText(String text) {

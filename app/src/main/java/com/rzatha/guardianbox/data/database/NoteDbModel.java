@@ -1,5 +1,6 @@
 package com.rzatha.guardianbox.data.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,6 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "note")
 public class NoteDbModel {
     @PrimaryKey
+    @NonNull
     @ColumnInfo(name = "id")
     private String id;
     @ColumnInfo(name = "name")
@@ -18,5 +20,17 @@ public class NoteDbModel {
         this.id = id;
         this.name = name;
         this.text = text;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getText() {
+        return text;
     }
 }

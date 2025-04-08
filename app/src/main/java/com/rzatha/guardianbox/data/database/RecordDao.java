@@ -14,7 +14,7 @@ import com.rzatha.guardianbox.domain.model.Note;
 import java.util.List;
 
 @Dao
-interface RecordDao {
+public interface RecordDao {
 
     @Query("SELECT * FROM login")
     LiveData<List<Login>> getAllLogins();
@@ -26,20 +26,20 @@ interface RecordDao {
     LiveData<List<Folder>> getAllFolders();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertLogin(Login login);
+    void insertLogin(LoginDbModel login);
 
     @Delete
-    void deleteLogin(Login login);
+    void deleteLogin(LoginDbModel login);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertNote(Note note);
+    void insertNote(NoteDbModel note);
 
     @Delete
-    void deleteNote(Note note);
+    void deleteNote(NoteDbModel note);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertFolder(Folder folder);
+    void insertFolder(FolderDbModel folder);
 
     @Delete
-    void deleteFolder(Folder folder);
+    void deleteFolder(FolderDbModel folder);
 }

@@ -10,15 +10,13 @@ import androidx.room.RoomDatabase;
         entities = {LoginDbModel.class, FolderDbModel.class, NoteDbModel.class},
         version = 1
 )
-abstract class AppDatabase extends RoomDatabase {
+public abstract class AppDatabase extends RoomDatabase {
 
     public abstract RecordDao recordDao();
 
     private static AppDatabase INSTANCE = null;
     private static final Object LOCK = new Object();
     private static final String DB_NAME = "records.db";
-
-    private AppDatabase(){}
 
     public static AppDatabase getInstance(Application application){
         if (INSTANCE!=null) return INSTANCE;

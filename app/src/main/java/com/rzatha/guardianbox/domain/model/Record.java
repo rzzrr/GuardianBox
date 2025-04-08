@@ -1,5 +1,9 @@
 package com.rzatha.guardianbox.domain.model;
 
-interface Record {
+import androidx.annotation.Nullable;
 
+public abstract class Record {
+    public boolean equals( Object obj) {
+        return super.equals(obj);
+    }
 }
