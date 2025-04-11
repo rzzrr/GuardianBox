@@ -1,7 +1,8 @@
-package com.rzatha.guardianbox.domain;
+package com.rzatha.guardianbox.domain.usecases;
 
 import androidx.lifecycle.LiveData;
 
+import com.rzatha.guardianbox.domain.Repository;
 import com.rzatha.guardianbox.domain.model.Note;
 
 import java.util.List;

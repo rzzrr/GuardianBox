@@ -13,33 +13,35 @@ import com.rzatha.guardianbox.domain.model.Note;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+
 @Dao
 public interface RecordDao {
 
     @Query("SELECT * FROM login")
-    LiveData<List<Login>> getAllLogins();
+    LiveData<List<LoginDbModel>> getAllLogins();
 
     @Query("SELECT * FROM note")
-    LiveData<List<Note>> getAllNotes();
+    LiveData<List<NoteDbModel>> getAllNotes();
 
     @Query("SELECT * FROM folder")
-    LiveData<List<Folder>> getAllFolders();
+    LiveData<List<FolderDbModel>> getAllFolders();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertLogin(LoginDbModel login);
+    Completable insertLogin(LoginDbModel login);
 
     @Delete
-    void deleteLogin(LoginDbModel login);
+    Completable deleteLogin(LoginDbModel login);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertNote(NoteDbModel note);
+    Completable insertNote(NoteDbModel note);
 
     @Delete
-    void deleteNote(NoteDbModel note);
+    Completable deleteNote(NoteDbModel note);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertFolder(FolderDbModel folder);
+    Completable insertFolder(FolderDbModel folder);
 
     @Delete
-    void deleteFolder(FolderDbModel folder);
+    Completable deleteFolder(FolderDbModel folder);
 }

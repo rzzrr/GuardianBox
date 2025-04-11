@@ -40,7 +40,6 @@ public class RecordFragment extends Fragment {
 
         binding.rvRecord.setAdapter(recordAdapter);
 
-        recordAdapter.submitList(repository.testList);
     }
 
     public static RecordFragment newInstance() {
