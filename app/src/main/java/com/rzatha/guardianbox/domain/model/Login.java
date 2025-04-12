@@ -8,16 +8,20 @@ import java.util.Objects;
 
 public class Login extends Record {
 
-    private String id;
+    private int id;
     private String resourceName;
     private String login;
     private String password;
 
-    public Login(String id, String resourceName, String login, String password) {
+    public Login(int id, String resourceName, String login, String password) {
         this.id = id;
         this.resourceName = resourceName;
         this.login = login;
         this.password = password;
+    }
+
+    public Login(String resourceName, String login, String password){
+        this(0, resourceName, login, password);
     }
 
     @Override
@@ -33,7 +37,7 @@ public class Login extends Record {
         return Objects.hash(id, resourceName, login, password);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -49,7 +53,7 @@ public class Login extends Record {
         return password;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

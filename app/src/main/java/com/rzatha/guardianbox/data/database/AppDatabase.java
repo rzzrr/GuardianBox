@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.AutoMigrationSpec;
 
 @Database(
         entities = {LoginDbModel.class, FolderDbModel.class, NoteDbModel.class},
@@ -27,7 +28,8 @@ public abstract class AppDatabase extends RoomDatabase {
                     application,
                     AppDatabase.class,
                     DB_NAME
-            ).build();
+            )
+                    .build();
 
             INSTANCE = dbInstance;
             return dbInstance;

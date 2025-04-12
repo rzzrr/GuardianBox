@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 
 import com.rzatha.guardianbox.data.repository.RepositoryImpl;
 import com.rzatha.guardianbox.domain.model.Folder;
@@ -14,10 +15,12 @@ import com.rzatha.guardianbox.domain.usecases.DeleteLogin;
 import com.rzatha.guardianbox.domain.usecases.DeleteNote;
 import com.rzatha.guardianbox.domain.usecases.GetLogins;
 import com.rzatha.guardianbox.domain.model.Login;
+import com.rzatha.guardianbox.domain.model.Record;
 import com.rzatha.guardianbox.domain.usecases.InsertFolder;
 import com.rzatha.guardianbox.domain.usecases.InsertLogin;
 import com.rzatha.guardianbox.domain.usecases.InsertNote;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -25,18 +28,57 @@ import io.reactivex.rxjava3.core.Completable;
 public class RecordViewModel extends AndroidViewModel {
 
     private Application application;
-    private RepositoryImpl repository = new RepositoryImpl(application);
+    private final RepositoryImpl repository;
+
+    public MediatorLiveData<List<Record>> ldRecords = new MediatorLiveData<>();
+    private final LiveData<List<Note>> allNotes;
+    private final LiveData<List<Login>> allLogins;
+    private final LiveData<List<Folder>> allFolders;
+
+
+    private List<Note> lastNotes = new ArrayList<>();
+    private List<Login> lastLogins = new ArrayList<>();
+    private List<Folder> lastFolders = new ArrayList<>();
+
 
     public RecordViewModel(@NonNull Application application) {
         super(application);
         this.application = application;
+
+        repository = new RepositoryImpl(application);
+
+        allNotes = repository.getNotes();
+        allLogins = repository.getLogins();
+        allFolders = repository.getFolders();
+
+        ldRecords.addSource(allLogins, logins -> {
+            if (logins != null) lastLogins = logins;
+            updateCombines();
+        });
+
+        ldRecords.addSource(allNotes, notes -> {
+                    if (notes != null) lastNotes = notes;
+                    updateCombines();
+                }
+        );
+
+        ldRecords.addSource(allFolders, folders -> {
+                    if (folders != null) lastFolders = folders;
+                    updateCombines();
+                }
+        );
     }
 
-    public LiveData<List<Login>> getLogins() {
-        return new GetLogins(repository).getLogins();
+    private void updateCombines() {
+        List<Record> combined = new ArrayList<>();
+        combined.addAll(lastNotes);
+        combined.addAll(lastLogins);
+        combined.addAll(lastFolders);
+        ldRecords.postValue(combined);
     }
 
-    public Completable insertLogin(Login login){
+
+    public Completable insertLogin(Login login) {
         return new InsertLogin(repository).insertLogin(login);
     }
 
@@ -49,7 +91,7 @@ public class RecordViewModel extends AndroidViewModel {
     }
 
 
-    public Completable insertNote(Note login){
+    public Completable insertNote(Note login) {
         return new InsertNote(repository).insertNote(login);
     }
 
@@ -62,7 +104,7 @@ public class RecordViewModel extends AndroidViewModel {
     }
 
 
-    public Completable insertFolder(Folder login){
+    public Completable insertFolder(Folder login) {
         return new InsertFolder(repository).insertFolder(login);
     }
 

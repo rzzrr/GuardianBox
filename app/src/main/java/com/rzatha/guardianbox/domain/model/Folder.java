@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class Folder extends Record {
 
-    private String id;
+    private int id;
     private String name;
 
-    public Folder(String id, String name) {
+    public Folder(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -25,7 +25,7 @@ public class Folder extends Record {
         return Objects.hash(id, name);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -33,7 +33,7 @@ public class Folder extends Record {
         return name;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

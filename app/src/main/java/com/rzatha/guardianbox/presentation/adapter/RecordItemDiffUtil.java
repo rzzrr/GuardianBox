@@ -13,11 +13,11 @@ public class RecordItemDiffUtil extends DiffUtil.ItemCallback<Record> {
     @Override
     public boolean areItemsTheSame(@NonNull Record oldItem, @NonNull Record newItem) {
         if (oldItem instanceof Login && newItem instanceof Login) {
-            return ((Login) oldItem).getId().equals(((Login) newItem).getId());
+            return ((Login) oldItem).getId() == (((Login) newItem).getId());
         } else if (oldItem instanceof Note && newItem instanceof Note) {
-            return ((Note) oldItem).getId().equals(((Note) newItem).getId());
+            return ((Note) oldItem).getId() == (((Note) newItem).getId());
         } else if (oldItem instanceof Folder && newItem instanceof Folder) {
-            return ((Folder) oldItem).getId().equals(((Folder) newItem).getId());
+            return ((Folder) oldItem).getId() == (((Folder) newItem).getId());
         } else {
             throw new IllegalStateException("Unknown instance of item");
         }

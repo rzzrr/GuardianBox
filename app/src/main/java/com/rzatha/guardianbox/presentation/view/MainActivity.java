@@ -15,6 +15,10 @@ import com.rzatha.guardianbox.domain.model.Login;
 import com.rzatha.guardianbox.domain.model.Note;
 import com.rzatha.guardianbox.presentation.viewmodel.RecordViewModel;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
@@ -27,12 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         //TEST
 
-        Repository repository = new RepositoryImpl(getApplication());
-        binding.fabAddRecord.setOnClickListener(view -> {
-            repository.insertLogin(new Login("1","rn", "login", "password"));
-            repository.insertNote(new Note("2", "name note", "text note"));
-            repository.insertFolder(new Folder("3", "folder name"));
-        });
+
 
     }
 
