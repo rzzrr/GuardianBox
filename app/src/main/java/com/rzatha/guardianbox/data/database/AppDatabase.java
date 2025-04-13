@@ -19,16 +19,16 @@ public abstract class AppDatabase extends RoomDatabase {
     private static final Object LOCK = new Object();
     private static final String DB_NAME = "records.db";
 
-    public static AppDatabase getInstance(Application application){
-        if (INSTANCE!=null) return INSTANCE;
-        synchronized (LOCK){
-            if (INSTANCE!=null) return INSTANCE;
+    public static AppDatabase getInstance(Application application) {
+        if (INSTANCE != null) return INSTANCE;
+        synchronized (LOCK) {
+            if (INSTANCE != null) return INSTANCE;
 
-            AppDatabase dbInstance =  Room.databaseBuilder(
-                    application,
-                    AppDatabase.class,
-                    DB_NAME
-            )
+            AppDatabase dbInstance = Room.databaseBuilder(
+                            application,
+                            AppDatabase.class,
+                            DB_NAME
+                    )
                     .build();
 
             INSTANCE = dbInstance;

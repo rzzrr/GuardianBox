@@ -3,26 +3,19 @@ package com.rzatha.guardianbox.data.repository;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.rzatha.guardianbox.data.Mapper;
 import com.rzatha.guardianbox.data.database.AppDatabase;
-import com.rzatha.guardianbox.data.database.NoteDbModel;
 import com.rzatha.guardianbox.data.database.RecordDao;
 import com.rzatha.guardianbox.domain.Repository;
 import com.rzatha.guardianbox.domain.model.Folder;
 import com.rzatha.guardianbox.domain.model.Login;
 import com.rzatha.guardianbox.domain.model.Note;
-import com.rzatha.guardianbox.domain.model.Record;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.rxjava3.core.Completable;
-import kotlin.jvm.functions.Function1;
 
 public class RepositoryImpl implements Repository {
 

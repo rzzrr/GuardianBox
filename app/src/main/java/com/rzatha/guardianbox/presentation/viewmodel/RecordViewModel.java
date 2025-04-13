@@ -13,7 +13,6 @@ import com.rzatha.guardianbox.domain.model.Note;
 import com.rzatha.guardianbox.domain.usecases.DeleteFolder;
 import com.rzatha.guardianbox.domain.usecases.DeleteLogin;
 import com.rzatha.guardianbox.domain.usecases.DeleteNote;
-import com.rzatha.guardianbox.domain.usecases.GetLogins;
 import com.rzatha.guardianbox.domain.model.Login;
 import com.rzatha.guardianbox.domain.model.Record;
 import com.rzatha.guardianbox.domain.usecases.InsertFolder;
@@ -30,7 +29,7 @@ public class RecordViewModel extends AndroidViewModel {
     private Application application;
     private final RepositoryImpl repository;
 
-    public MediatorLiveData<List<Record>> ldRecords = new MediatorLiveData<>();
+    public MediatorLiveData<List<Record>> allRecords = new MediatorLiveData<>();
     private final LiveData<List<Note>> allNotes;
     private final LiveData<List<Login>> allLogins;
     private final LiveData<List<Folder>> allFolders;
@@ -51,18 +50,18 @@ public class RecordViewModel extends AndroidViewModel {
         allLogins = repository.getLogins();
         allFolders = repository.getFolders();
 
-        ldRecords.addSource(allLogins, logins -> {
+        allRecords.addSource(allLogins, logins -> {
             if (logins != null) lastLogins = logins;
             updateCombines();
         });
 
-        ldRecords.addSource(allNotes, notes -> {
+        allRecords.addSource(allNotes, notes -> {
                     if (notes != null) lastNotes = notes;
                     updateCombines();
                 }
         );
 
-        ldRecords.addSource(allFolders, folders -> {
+        allRecords.addSource(allFolders, folders -> {
                     if (folders != null) lastFolders = folders;
                     updateCombines();
                 }
@@ -74,7 +73,7 @@ public class RecordViewModel extends AndroidViewModel {
         combined.addAll(lastNotes);
         combined.addAll(lastLogins);
         combined.addAll(lastFolders);
-        ldRecords.postValue(combined);
+        allRecords.postValue(combined);
     }
 
 
@@ -86,10 +85,9 @@ public class RecordViewModel extends AndroidViewModel {
         return new InsertLogin(repository).insertLogin(login);
     }
 
-    public Completable deleteLogin(Login login) {
+    private Completable deleteLogin(Login login) {
         return new DeleteLogin(repository).deleteLogin(login);
     }
-
 
     public Completable insertNote(Note login) {
         return new InsertNote(repository).insertNote(login);
@@ -99,7 +97,7 @@ public class RecordViewModel extends AndroidViewModel {
         return new InsertNote(repository).insertNote(login);
     }
 
-    public Completable deleteNote(Note login) {
+    private Completable deleteNote(Note login) {
         return new DeleteNote(repository).deleteNote(login);
     }
 
@@ -112,8 +110,23 @@ public class RecordViewModel extends AndroidViewModel {
         return new InsertFolder(repository).insertFolder(login);
     }
 
-    public Completable deleteFolder(Folder login) {
+    private Completable deleteFolder(Folder login) {
         return new DeleteFolder(repository).deleteFolder(login);
+    }
+
+    public Completable deleteRecord(Record record){
+        if (record instanceof Login) {
+            return deleteLogin((Login) record);
+        }
+        else if (record instanceof Note) {
+            return deleteNote((Note) record);
+        }
+        else if (record instanceof Folder) {
+            return deleteFolder((Folder) record);
+        } else {
+            String message = String.format("Unknown instance to delete: %s", record.getClass().getCanonicalName());
+            throw new IllegalArgumentException(message);
+        }
     }
 
 }
