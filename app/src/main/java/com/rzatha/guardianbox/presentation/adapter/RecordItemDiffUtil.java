@@ -12,15 +12,19 @@ public class RecordItemDiffUtil extends DiffUtil.ItemCallback<Record> {
 
     @Override
     public boolean areItemsTheSame(@NonNull Record oldItem, @NonNull Record newItem) {
-        if (oldItem instanceof Login && newItem instanceof Login) {
-            return ((Login) oldItem).getId() == (((Login) newItem).getId());
-        } else if (oldItem instanceof Note && newItem instanceof Note) {
-            return ((Note) oldItem).getId() == (((Note) newItem).getId());
-        } else if (oldItem instanceof Folder && newItem instanceof Folder) {
-            return ((Folder) oldItem).getId() == (((Folder) newItem).getId());
-        } else {
-            throw new IllegalStateException("Unknown instance of item");
+        if (oldItem.getClass() == newItem.getClass()) {
+            if (oldItem instanceof Login && newItem instanceof Login) {
+                return ((Login) oldItem).getId() == (((Login) newItem).getId());
+            } else if (oldItem instanceof Note && newItem instanceof Note) {
+                return ((Note) oldItem).getId() == (((Note) newItem).getId());
+            } else if (oldItem instanceof Folder && newItem instanceof Folder) {
+                return ((Folder) oldItem).getId() == (((Folder) newItem).getId());
+            } else {
+                String message = String.format("Unknown instance of items: %s, %s", oldItem, newItem);
+                throw new IllegalStateException(message);
+            }
         }
+        return false;
     }
 
     @Override
