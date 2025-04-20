@@ -1,8 +1,9 @@
 package com.rzatha.guardianbox.domain.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Note extends Record {
+public class Note extends Record implements Serializable {
 
     private int id;
     private String name;

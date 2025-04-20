@@ -1,4 +1,4 @@
-package com.rzatha.guardianbox.presentation.view;
+package com.rzatha.guardianbox.presentation.view.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.rzatha.guardianbox.data.repository.RepositoryImpl;
 import com.rzatha.guardianbox.databinding.FragmentRecordBinding;
 import com.rzatha.guardianbox.databinding.MenuAddRecordBinding;
 import com.rzatha.guardianbox.domain.model.Folder;
@@ -26,7 +25,6 @@ import com.rzatha.guardianbox.presentation.adapter.RecordAdapter;
 import com.rzatha.guardianbox.presentation.viewmodel.RecordViewModel;
 
 import java.util.List;
-import java.util.Random;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;

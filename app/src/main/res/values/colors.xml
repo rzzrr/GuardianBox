@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray_light">#d4d4d4</color>
+    <color name="gray">#aaaaaa</color>
+    <color name="tetsu_black">#2C3531</color>
+    <color name="caribbean_swim">#116466</color>
+    <color name="caribbean_swim_light">#80116466</color>
+    <color name="sheepskin">#d9b08c</color>
+    <color name="peach_orange">#ffcb9a</color>
+    <color name="aqua_glass">#d1e8e2</color>
+    <color name="red_oxide">#621E1B</color>
+    <color name="leopard">#d39c01</color>
 </resources>

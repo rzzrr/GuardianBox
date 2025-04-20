@@ -4,9 +4,10 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Login extends Record {
+public class Login extends Record implements Serializable {
 
     private int id;
     private String resourceName;

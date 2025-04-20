@@ -1,9 +1,16 @@
 <resources>
     <string name="app_name">GuardianBox</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_login">Новый Логин</string>
+    <string name="login">Логин</string>
     <string name="add_record">Добавить запись</string>
     <string name="new_folder">Новая папка</string>
     <string name="new_note">Новая заметка</string>
+    <string name="resource">Ресурс</string>
+    <string name="password">Пароль</string>
+    <string name="show_password">Показать пароль</string>
+    <string name="move">Переместить</string>
+    <string name="share">Поделиться</string>
+    <string name="remove_record">Удалить запись</string>
+    <string name="save">Сохранить</string>
 </resources>
