@@ -1,8 +1,9 @@
 package com.rzatha.guardianbox.domain.model;
 
-import androidx.annotation.Nullable;
 
-public abstract class Record {
+import java.io.Serializable;
+
+public abstract class Record implements Serializable {
     public boolean equals( Object obj) {
         return super.equals(obj);
     }

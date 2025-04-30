@@ -25,6 +25,12 @@ public class RecordAdapter extends ListAdapter<Record, RecyclerView.ViewHolder> 
         super(new RecordItemDiffUtil());
     }
 
+    private OnRecordClickListener onRecordClickListener;
+
+    public void setOnRecordClickListener(OnRecordClickListener onRecordClickListener) {
+        this.onRecordClickListener = onRecordClickListener;
+    }
+
     @Override
     public int getItemViewType(int position) {
         Record record = getItem(position);
@@ -42,7 +48,7 @@ public class RecordAdapter extends ListAdapter<Record, RecyclerView.ViewHolder> 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         Log.d("Adapter", "onCreateViewHolder");
 
-        switch (viewType){
+        switch (viewType) {
             case TYPE_FOLDER: {
                 View view = inflater.inflate(
                         R.layout.folder_item,
@@ -61,7 +67,7 @@ public class RecordAdapter extends ListAdapter<Record, RecyclerView.ViewHolder> 
                 );
                 return new LoginViewHolder(view);
             }
-            case TYPE_NOTE:{
+            case TYPE_NOTE: {
                 View view = inflater.inflate(
                         R.layout.note_item,
                         parent,
@@ -91,31 +97,44 @@ public class RecordAdapter extends ListAdapter<Record, RecyclerView.ViewHolder> 
         if (holder instanceof NoteViewHolder) {
             ((NoteViewHolder) holder).bind((Note) record);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onRecordClickListener != null) {
+                    onRecordClickListener.onRecordClick(record);
+                }
+            }
+        });
+
     }
 
     static class FolderViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tvName;
+
         public FolderViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
         }
 
-        void bind(Folder folder){
+        void bind(Folder folder) {
             tvName.setText(folder.getName());
         }
 
     }
 
-    static class NoteViewHolder extends RecyclerView.ViewHolder {
+    class NoteViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tvName;
+
         public NoteViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
+
         }
 
-        void bind(Note note){
+        void bind(Note note) {
             tvName.setText(note.getName());
         }
 
@@ -124,6 +143,7 @@ public class RecordAdapter extends ListAdapter<Record, RecyclerView.ViewHolder> 
     static class LoginViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvName;
         private final TextView tvLogin;
+
         public LoginViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
@@ -135,5 +155,10 @@ public class RecordAdapter extends ListAdapter<Record, RecyclerView.ViewHolder> 
             tvLogin.setText(login.getLogin());
         }
 
+    }
+
+
+    public interface OnRecordClickListener {
+        void onRecordClick(Record record);
     }
 }

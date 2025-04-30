@@ -28,17 +28,13 @@ public class RecordViewModel extends AndroidViewModel {
 
     private Application application;
     private final RepositoryImpl repository;
-
     public MediatorLiveData<List<Record>> allRecords = new MediatorLiveData<>();
     private final LiveData<List<Note>> allNotes;
     private final LiveData<List<Login>> allLogins;
     private final LiveData<List<Folder>> allFolders;
-
-
     private List<Note> lastNotes = new ArrayList<>();
     private List<Login> lastLogins = new ArrayList<>();
     private List<Folder> lastFolders = new ArrayList<>();
-
 
     public RecordViewModel(@NonNull Application application) {
         super(application);
@@ -75,7 +71,6 @@ public class RecordViewModel extends AndroidViewModel {
         combined.addAll(lastFolders);
         allRecords.postValue(combined);
     }
-
 
     public Completable insertLogin(Login login) {
         return new InsertLogin(repository).insertLogin(login);
