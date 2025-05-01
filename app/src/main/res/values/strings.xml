@@ -13,4 +13,6 @@
     <string name="share">Поделиться</string>
     <string name="remove_record">Удалить запись</string>
     <string name="save">Сохранить</string>
+    <string name="name">Название</string>
+    <string name="content">Содержание</string>
 </resources>

@@ -17,11 +17,15 @@ import com.rzatha.guardianbox.domain.model.Folder;
 import com.rzatha.guardianbox.domain.model.Login;
 import com.rzatha.guardianbox.domain.model.Note;
 import com.rzatha.guardianbox.domain.model.Record;
+import com.rzatha.guardianbox.presentation.view.OnCloseFragmentListener;
 import com.rzatha.guardianbox.presentation.view.fragment.FragmentType;
 import com.rzatha.guardianbox.presentation.view.fragment.RecordFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements RecordFragment.OnRecordClickListener, RecordFragment.OnAddRecordClickListener {
+        implements RecordFragment.OnRecordClickListener,
+        RecordFragment.OnAddRecordClickListener,
+        OnCloseFragmentListener
+{
 
     private ActivityMainBinding binding;
 
@@ -58,7 +62,11 @@ public class MainActivity extends AppCompatActivity
             Fragment fragment = getRightFragment(fragmentType, record);
             launchFragment(binding.fragmentContainerViewEdit, fragment);
         } else {
-            launchActivity(record);
+            if (record != null) {
+                launchActivity(record);
+            } else {
+                launchActivity(fragmentType);
+            }
         }
     }
 
@@ -68,6 +76,11 @@ public class MainActivity extends AppCompatActivity
 
     private void launchActivity(Record record) {
         Intent intent = RecordDetailActivity.newIntent(record, this);
+        startActivity(intent);
+    }
+
+    private void launchActivity(FragmentType fragmentType) {
+        Intent intent = RecordDetailActivity.newIntent(fragmentType, this);
         startActivity(intent);
     }
 

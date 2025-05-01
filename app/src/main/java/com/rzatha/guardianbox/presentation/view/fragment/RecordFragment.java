@@ -39,7 +39,6 @@ public class RecordFragment extends Fragment {
 
     private OnRecordClickListener onRecordClickListener;
     private OnAddRecordClickListener onAddRecordClickListener;
-
     private FragmentRecordBinding binding;
     private RecordViewModel viewModel;
     private final ItemTouchHelper itemTouchHelper =
@@ -101,7 +100,6 @@ public class RecordFragment extends Fragment {
         });
     }
 
-
     public static RecordFragment newInstance() {
         RecordFragment fragment = new RecordFragment();
         Bundle args = new Bundle();
@@ -116,6 +114,7 @@ public class RecordFragment extends Fragment {
     public interface OnAddRecordClickListener {
         void onAddRecordClick();
     }
+
 
 
 }

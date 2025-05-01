@@ -6,6 +6,7 @@ import com.rzatha.guardianbox.domain.model.Folder;
 import com.rzatha.guardianbox.domain.model.Login;
 import com.rzatha.guardianbox.domain.model.Note;
 import com.rzatha.guardianbox.domain.model.Record;
+import com.rzatha.guardianbox.presentation.view.fragment.FolderFragment;
 import com.rzatha.guardianbox.presentation.view.fragment.FragmentType;
 import com.rzatha.guardianbox.presentation.view.fragment.LoginFragment;
 import com.rzatha.guardianbox.presentation.view.fragment.NoteFragment;
@@ -44,9 +45,9 @@ public class RecordFragmentHelper {
                 break;
             case FOLDER_FRAGMENT:
                 if (record != null) {
-                    result = LoginFragment.newInstance((Login) record);
+                    result = FolderFragment.newInstance((Folder) record);
                 } else {
-                    result = LoginFragment.newInstance();
+                    result = FolderFragment.newInstance();
                 }
                 break;
             default:

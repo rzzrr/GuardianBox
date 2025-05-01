@@ -12,6 +12,10 @@ public class Folder extends Record {
         this.name = name;
     }
 
+    public Folder(String name){
+        this(0, name);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

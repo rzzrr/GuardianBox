@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.rzatha.guardianbox.databinding.FragmentNoteBinding;
 import com.rzatha.guardianbox.domain.model.Note;
+import com.rzatha.guardianbox.presentation.viewmodel.RecordViewModel;
 
 public class NoteFragment extends Fragment {
 
@@ -21,6 +23,7 @@ public class NoteFragment extends Fragment {
     private FragmentOpenType openType;
     private Note note;
     private FragmentNoteBinding binding;
+    private RecordViewModel viewModel;
 
     public NoteFragment() {
     }
@@ -65,6 +68,8 @@ public class NoteFragment extends Fragment {
         } else {
             openType = FragmentOpenType.CREATE;
         }
+
+        viewModel = new ViewModelProvider(this).get(RecordViewModel.class);
     }
 
     @Override
@@ -92,6 +97,6 @@ public class NoteFragment extends Fragment {
     }
 
     private void closeFragment(){
-        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        getParentFragmentManager().beginTransaction().remove(this).commit();
     }
 }

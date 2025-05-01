@@ -1,5 +1,6 @@
 package com.rzatha.guardianbox.presentation.view.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +14,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.rzatha.guardianbox.databinding.FragmentLoginBinding;
 import com.rzatha.guardianbox.domain.model.Login;
+import com.rzatha.guardianbox.presentation.view.OnCloseFragmentListener;
 import com.rzatha.guardianbox.presentation.viewmodel.RecordViewModel;
 
+import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
@@ -27,6 +30,7 @@ public class LoginFragment extends Fragment {
     private Login login;
     private FragmentLoginBinding binding;
     private RecordViewModel viewModel;
+    private OnCloseFragmentListener onCloseFragmentListener;
 
     public LoginFragment() {
     }
@@ -77,30 +81,54 @@ public class LoginFragment extends Fragment {
         setupClickListeners();
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            onCloseFragmentListener = (OnCloseFragmentListener) context;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Activity must implements OnCloseFragmentListener");
+        }
+    }
+
     private void setupClickListeners() {
         binding.buttonSave.setOnClickListener(view -> {
 
-            String resourceName = binding.etResourceName.getText().toString();
-            String loginValue = binding.etLoginValue.getText().toString();
-            String passwordValue = binding.etPasswordValue.getText().toString();
+            String resourceName = binding.etResourceName.getText().toString().trim();
+            String loginValue = binding.etLoginValue.getText().toString().trim();
+            String passwordValue = binding.etPasswordValue.getText().toString().trim();
 
             Login newLogin = null;
-            if (openType == FragmentOpenType.CREATE) {
-                newLogin = new Login(resourceName, loginValue, passwordValue);
 
-            } else if (openType == FragmentOpenType.EDIT) {
-                newLogin = login;
-                login.setResourceName(resourceName);
-                login.setLogin(loginValue);
-                login.setPassword(passwordValue);
+            if (validateInput(resourceName, loginValue, passwordValue)) {
+
+                if (openType == FragmentOpenType.CREATE) {
+                    newLogin = new Login(resourceName, loginValue, passwordValue);
+
+                } else if (openType == FragmentOpenType.EDIT) {
+                    newLogin = login;
+                    login.setResourceName(resourceName);
+                    login.setLogin(loginValue);
+                    login.setPassword(passwordValue);
+                }
+
+                viewModel.insertLogin(newLogin)
+                        .subscribeOn(Schedulers.newThread())
+                        .subscribe();
+
+                closeFragment();
             }
-
-            viewModel.insertLogin(newLogin)
-                    .subscribeOn(Schedulers.newThread())
-                    .subscribe();
-
-            closeFragment();
         });
+
+        binding.buttonRemove.setOnClickListener(view -> {
+            viewModel.deleteRecord(login)
+                    .subscribeOn(Schedulers.newThread())
+                    .subscribe(this::closeFragment);
+        });
+    }
+
+    private boolean validateInput(String resource, String login, String password) {
+        return (!resource.isEmpty() || !login.isEmpty() || !password.isEmpty());
     }
 
     @Override
@@ -130,6 +158,10 @@ public class LoginFragment extends Fragment {
     }
 
     private void closeFragment() {
-        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        getParentFragmentManager().beginTransaction().remove(this).commit();
+        onCloseFragmentListener.onCloseFragment();
     }
+
+
+
 }

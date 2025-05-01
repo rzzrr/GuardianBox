@@ -9,19 +9,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.rzatha.guardianbox.databinding.ActivityRecordDetailBinding;
 import com.rzatha.guardianbox.domain.model.Record;
+import com.rzatha.guardianbox.presentation.view.OnCloseFragmentListener;
 import com.rzatha.guardianbox.presentation.view.fragment.FragmentType;
-import com.rzatha.guardianbox.presentation.view.fragment.LoginFragment;
 
-public class RecordDetailActivity extends AppCompatActivity {
+public class RecordDetailActivity extends AppCompatActivity implements OnCloseFragmentListener {
 
     private static final String EXTRA_RECORD = "record";
+    private static final String EXTRA_FRAGMENT_TYPE = "fragment_type";
     private ActivityRecordDetailBinding binding;
     private Record record;
+    private FragmentType fragmentType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +36,24 @@ public class RecordDetailActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             record = getIntent().getSerializableExtra(EXTRA_RECORD, Record.class);
+            fragmentType = getIntent().getSerializableExtra(EXTRA_FRAGMENT_TYPE, FragmentType.class);
         }
 
-        FragmentType fragmentType = getFragmentType(record);
+        if (record != null){
+            FragmentType fragmentType = getFragmentType(record);
+            Fragment fragment = getRightFragment(fragmentType, record);
+            launchFragment(binding.getRoot(), fragment);
+        } else {
 
-        Fragment fragment = getRightFragment(fragmentType, record);
-        launchFragment(binding.getRoot(), fragment);
+            launchFragment(binding.getRoot(), getRightFragment(fragmentType));
+        }
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        });
     }
 
     public static Intent newIntent(Record record, Context context) {
@@ -46,19 +61,10 @@ public class RecordDetailActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_RECORD, record);
         return intent;
     }
-
-    public static Intent newIntent(Context context) {
-        return new Intent(context, RecordDetailActivity.class);
-    }
-
-    private void launchFragment(Record record) {
-        getSupportFragmentManager().popBackStack();
-        getSupportFragmentManager().beginTransaction()
-                .replace(
-                        binding.getRoot().getId(),
-                        LoginFragment.newInstance()
-                )
-                .commit();
+    public static Intent newIntent(FragmentType fragmentType, Context context) {
+        Intent intent = new Intent(context, RecordDetailActivity.class);
+        intent.putExtra(EXTRA_FRAGMENT_TYPE, fragmentType);
+        return intent;
     }
 
     private void launchFragment(View fragmentContainer, Fragment fragment) {
@@ -68,6 +74,10 @@ public class RecordDetailActivity extends AppCompatActivity {
                 .replace(fragmentContainer.getId(), fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+    @Override
+    public void onCloseFragment() {
+        finish();
     }
 
 
